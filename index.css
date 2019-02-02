@@ -3,8 +3,14 @@
 }
 
 body {
-	background-color: #0D142E;
+	background-image: linear-gradient(to bottom right, #0D142E, #46ABD6);
 	margin: 0;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+	outline: none;
 }
 
 #particles {
@@ -37,7 +43,29 @@ body {
 	font-family: "Open Sans", sans-serif;
 }
 
+.social-icons, .social-icons a {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	margin: 1rem;
+	transition: transform .25s;
+}
+
+.social-icons a:hover {
+	transform: scale(1.2);
+}
+
+.fa-instagram, .fa-github {
+	color: white;
+}
+
 @keyframes pulse {
+	0% {transform: scale(1)}
+	50% {transform: scale(1.1)}
+	100% {transform: scale(1)}
+}
+
+@keyframes slideInDown {
 	0% {transform: scale(1)}
 	50% {transform: scale(1.1)}
 	100% {transform: scale(1)}
