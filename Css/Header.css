@@ -1,0 +1,11 @@
+.top-nav {
+    height: 100px;
+    width: 100%;
+    position: fixed;
+}
+
+#yotta-logo {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}

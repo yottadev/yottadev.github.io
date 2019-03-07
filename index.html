@@ -4,11 +4,16 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Yotta</title>
-	<link rel="stylesheet" href="index.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	<link rel="shortcut icon" type="image/png" href="favicon.svg"/>
+
+	<link rel="stylesheet" href="Css/Global.css">
+	<link rel="stylesheet" href="Css/Header.css">
+	<link rel="stylesheet" href="Css/Main.css">
 </head>
+
 <body>
 
 	<header>
@@ -20,16 +25,69 @@
 	<main>
 		<div id="particles"></div>
 		<div id="main-container">
-			<div class="screen">
-				
+			<div class="blog-slider">
+				<div class="blog-slider__wrp swiper-wrapper">
+
+					<!-- Slide #1 -->
+					<div class="blog-slider__item swiper-slide">
+						<!-- IMAGEM -->
+						<div class="blog-slider__img">
+							<img src="./Img/Lucas.jpeg" alt="Lucas de OLiveira Mota">
+						</div>
+
+						<!-- DADOS -->
+						<div class="blog-slider__content">
+							<span class="blog-slider__code">( Campo para uso )</span>
+							<div class="blog-slider__title">( Titulo )</div>
+							<div class="blog-slider__text"> ( Texto descritivo ) - Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
+							<a href="#" class="blog-slider__button"> Mais informações </a>
+						</div>
+					</div>
+
+					<!-- Slide #2 -->
+					<div class="blog-slider__item swiper-slide">
+						<!-- IMAGEM -->
+						<div class="blog-slider__img">
+							<img src="./Img/Lucas.jpeg" alt="Lucas de OLiveira Mota">
+						</div>
+
+						<!-- DADOS -->
+						<div class="blog-slider__content">
+							<span class="blog-slider__code">( Campo para uso )</span>
+							<div class="blog-slider__title">( Titulo )</div>
+							<div class="blog-slider__text"> ( Texto descritivo ) - Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
+							<a href="#" class="blog-slider__button"> Mais informações </a>
+						</div>
+					</div>
+
+					<!-- Slide #3 -->
+					<div class="blog-slider__item swiper-slide">
+						<!-- IMAGEM -->
+						<div class="blog-slider__img">
+							<img src="./Img/Lucas.jpeg" alt="Lucas de OLiveira Mota">
+						</div>
+
+						<!-- DADOS -->
+						<div class="blog-slider__content">
+							<span class="blog-slider__code">( Campo para uso )</span>
+							<div class="blog-slider__title">( Titulo )</div>
+							<div class="blog-slider__text"> ( Texto descritivo ) - Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
+							<a href="#" class="blog-slider__button"> Mais informações </a>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="blog-slider__pagination"></div>
 			</div>
 		</div>
 	</main>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script><script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 
-	<script>particlesJS.load("particles", "particles.json")</script>
-
+	<script> particlesJS.load("particles", "particles.json") </script>
+	<script language="JavaScript" src="Js/mains.js"></script>
 </body>
 </html>

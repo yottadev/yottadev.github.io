@@ -1,0 +1,20 @@
+*, *:before, *:after {
+  margin: 0;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body {
+  overflow-y: hidden;
+}
+
+body {
+  background-image: linear-gradient(to bottom right,#000428, #004e92);
+  font-family: 'Fira Sans', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+
+  /* flex-flow: column nowrap; */
+}
