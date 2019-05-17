@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible", content="ie=edge")
+		meta(name="description", content="Time de programadores apaixonados por código, prontos para produzir o que sua empresa precisa ou a sua primeira ideia revolucionária")
+		meta(name="keywords", content="yotta, yotta desenvolvimento, dev, development, desenvolvimento, software, startup")
+		title Yotta
+		// Prevent FOUC (flash of unstyled content)
+		style.
+			.fouc-hidden {
+				display: none
+			}
+		script.
+			var html = document.querySelector("html");
+			html.classList.add("fouc-hidden");
+			window.onload = function () {
+				html.classList.remove("fouc-hidden");
+				html.classList.add("fadeIn");
+			}
+		link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
+		link(rel="stylesheet", href="dist/css/index.css")
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Open+Sans")
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css")
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Oswald")
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Baloo+Bhai")
+	body
+		#particles
+		.container-header
+			img#yotta-logo(src="dist/img/yotta-logo.svg", alt="yotta-logo")
+
+			#sliding-tabs-container
+				#tabs-container
+					.tab(data-tab="about") Sobre
+					.tab(data-tab="blog") Blog
+					.tab(data-tab="portfolio") Portfólio
+				#tabs-slider
+					.slider
+
+			.social-icons
+				a(href="https://www.instagram.com/yotta.team/", title="Instagram")
+					i.fab.fa-instagram.fa-2x
+				a(href="https://github.com/yottadev/" title="Github")
+					i.fab.fa-github.fa-2x
+
+			.hamburguer-icon
+				.hamburguer-line.line1
+				.hamburguer-line.line2
+				.hamburguer-line.line3
+
+		#expandable-menu
+			.expandable-menu-blur
+			.expandable-menu-elements
+				.expandable-menu-element(data-tab="about") Sobre
+				.expandable-menu-element(data-tab="blog") Blog
+				.expandable-menu-element(data-tab="portfolio") Portfólio
+
+		.container-body
+			#about-tab.tab-content
+				.neon-text-container
+					p.neon-text-paragraph Produzindo sua
+					p.neon-text-paragraph primeira ideia
+					p.neon-text-paragraph revolucionária
+
+			#blog-tab.tab-content
+				.blog-placeholder-container
+					img.typewriter-icon(src="dist/img/typewriter.png", alt="typewriter-icon")
+					h3.blog-placeholder-headline Nenhuma publicação aqui
+					h4.blog-placeholder-subtitle Por enquanto...
+
+			#portfolio-tab.tab-content
+				.masonry-portfolio-container
+					- var n = 0
+					while n < 15
+						.portfolio-item= n++
+
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js")
+		script(src="dist/js/index.js")
