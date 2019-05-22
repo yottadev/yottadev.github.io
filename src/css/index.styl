@@ -1,16 +1,17 @@
+accent-color = #355cc9
 @import "_components"
 
 @font-face 
-    font-family "Hemondalisa"
-    src url("../fonts/Hemondalisa.woff2") format("woff2")
-    font-weight normal
-    font-style normal
+	font-family "Hemondalisa"
+	src url("../fonts/Hemondalisa.woff2") format("woff2")
+	font-weight normal
+	font-style normal
 
 @font-face 
-    font-family "SunsetBoulevard"
-    src url("../fonts/SunsetBoulevard.woff2") format("woff2")
-    font-weight normal
-    font-style normal
+	font-family "SunsetBoulevard"
+	src url("../fonts/SunsetBoulevard.woff2") format("woff2")
+	font-weight normal
+	font-style normal
 
 *
 	box-sizing border-box
@@ -29,8 +30,17 @@ body
 	background-size 400% 400%
 	//animation animatedGradient 16s ease infinite
 
-	//&::-webkit-scrollbar
-		//width 0 !important
+	::-webkit-scrollbar
+		width 5px
+
+	::-webkit-scrollbar-track
+		background #f1f1f1
+
+	::-webkit-scrollbar-thumb
+		background lighten(accent-color, 20%)
+
+	::-webkit-scrollbar-thumbhover
+		background accent-color
 
 	a
 		color #fff
@@ -92,7 +102,7 @@ body
 					background-size 400% auto
 					width calc(33% - 33px)
 					height 100%
-					animation animatedSliderGradient 5s infinite
+					//animation animatedSliderGradient 5s infinite
 					border-radius 28px
 					transition margin 0.5s, width 0.5s
 
@@ -156,6 +166,12 @@ body
 							font-family "SunsetBoulevard"
 							font-size 56px
 							line-height 56px
+
+			&#portfolio-tab
+				.repo-container
+					display flex
+					flex-wrap wrap
+					justify-content center
 
 // Keyframes
 @keyframes neonEffect
@@ -233,3 +249,7 @@ body
 		.container-header
 			.social-icons
 				display none
+
+		#expandable-menu
+			.expandable-menu-social-icons
+				display flex
