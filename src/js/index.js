@@ -1,5 +1,3 @@
-//particlesJS.load("particles", "dist/particles.json");
-
 // jQuery plugins
 $.fn.isAfter = function (sel) {
 	return this.prevAll().filter(sel).length !== 0;
@@ -54,31 +52,33 @@ function closeExpandableMenu() {
 
 // Open tabs
 $(document).on("click", "[data-tab]", (e) => {
-	if (animationRunning == true) {
-		return false;
+	if (!animationRunning) {
+		animationRunning = true;
+		var tabPercentage = 100 / $(".tab-content").length;
+		var tabIndex = $(e.target).index();
+		if ($(e.target).parents("#sliding-tabs-container").length > 0) {
+			var sliderMargin = $(e.target).offset().left - $(e.target).parent().offset().left;
+			var sliderWidth = $(e.target).width();
+			$("#tabs-slider .slider").css("margin-left", sliderMargin);
+			$("#tabs-slider .slider").width(sliderWidth);
+		} else if ($(e.target).parents("#expandable-menu").length > 0) {
+			$(".expandable-menu-element").removeClass("active-menu-element");
+			$(e.target).addClass("active-menu-element");
+			animationRunning = false;
+			closeExpandableMenu();
+			animationRunning = true;
+		}
+		$(".container-body").css("max-height", "calc(100vh - 98.65px)");
+		$(".container-body").css("transform", `translate3d(-${tabPercentage * tabIndex}%, 0, 0)`);
+		var tabContentHeightLimit = $(".container-body .tab-content").eq(tabIndex).height();
+		$("html, body").animate({
+			scrollTop: 0
+		}, "slow");
+		$(".container-body").one("transitionend", () => {
+			$(".container-body").css("max-height", tabContentHeightLimit);
+			animationRunning = false;
+		});
 	}
-	animationRunning = true;
-	var tabPercentage = 100 / $(".tab-content").length;
-	var tabIndex = $(e.target).index();
-	if ($(e.target).parents("#sliding-tabs-container").length > 0) {
-		var sliderMargin = $(e.target).offset().left - $(e.target).parent().offset().left;
-		var sliderWidth = $(e.target).width();
-		$("#tabs-slider .slider").css("margin-left", sliderMargin);
-		$("#tabs-slider .slider").width(sliderWidth);
-	} else if ($(e.target).parents("#expandable-menu").length > 0) {
-		$(".expandable-menu-element").removeClass("active-menu-element");
-		$(e.target).addClass("active-menu-element");
-		// Toggle hamburguer menu
-		$(".hamburguer-icon").toggleClass("opened");
-		closeExpandableMenu();
-	}
-	$(".container-body").css("transform", `translate3d(-${tabPercentage * tabIndex}%, 0, 0)`);
-	var tabContentHeightLimit = $(".container-body .tab-content").eq(tabIndex).height();
-	$("html, body").animate({ scrollTop: 0 }, "slow");
-	$(".container-body").css("max-height", tabContentHeightLimit);
-	$(".container-body").one("transitionend", () => {
-		animationRunning = false;
-	});
 });
 
 // Trigger expandable menu
@@ -87,12 +87,6 @@ $(document).on("click", ".hamburguer-icon", (e) => {
 		closeExpandableMenu();
 	} else {
 		openExpandableMenu();
-	}
-});
-
-$(window).on("resize", () => {
-	if ($(window).width() > 520) {
-		closeExpandableMenu();
 	}
 });
 
@@ -187,3 +181,7 @@ if (actualTime < githubDataTimestamp + 300000) {
 			});
 		});
 }
+
+$(() => {
+	particlesJS.load("particles", "dist/particles.json");
+});
