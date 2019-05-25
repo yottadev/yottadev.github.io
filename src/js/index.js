@@ -1,14 +1,4 @@
-// jQuery plugins
-$.fn.isAfter = function (sel) {
-	return this.prevAll().filter(sel).length !== 0;
-};
-
-$.fn.isBefore = function (sel) {
-	return this.nextAll().filter(sel).length !== 0;
-};
-
 animationRunning = false;
-
 function openExpandableMenu() {
 	if (!animationRunning) {
 		animationRunning = true;
@@ -50,37 +40,6 @@ function closeExpandableMenu() {
 	}
 }
 
-// Open tabs
-$(document).on("click", "[data-tab]", (e) => {
-	if (!animationRunning) {
-		animationRunning = true;
-		var tabPercentage = 100 / $(".tab-content").length;
-		var tabIndex = $(e.target).index();
-		if ($(e.target).parents("#sliding-tabs-container").length > 0) {
-			var sliderMargin = $(e.target).offset().left - $(e.target).parent().offset().left;
-			var sliderWidth = $(e.target).width();
-			$("#tabs-slider .slider").css("margin-left", sliderMargin);
-			$("#tabs-slider .slider").width(sliderWidth);
-		} else if ($(e.target).parents("#expandable-menu").length > 0) {
-			$(".expandable-menu-element").removeClass("active-menu-element");
-			$(e.target).addClass("active-menu-element");
-			animationRunning = false;
-			closeExpandableMenu();
-			animationRunning = true;
-		}
-		$(".container-body").css("max-height", "calc(100vh - 98.65px)");
-		$(".container-body").css("transform", `translate3d(-${tabPercentage * tabIndex}%, 0, 0)`);
-		var tabContentHeightLimit = $(".container-body .tab-content").eq(tabIndex).height();
-		$("html, body").animate({
-			scrollTop: 0
-		}, "slow");
-		$(".container-body").one("transitionend", () => {
-			$(".container-body").css("max-height", tabContentHeightLimit);
-			animationRunning = false;
-		});
-	}
-});
-
 // Trigger expandable menu
 $(document).on("click", ".hamburguer-icon", (e) => {
 	if ($(e.target).closest(".hamburguer-icon").hasClass("opened")) {
@@ -91,97 +50,69 @@ $(document).on("click", ".hamburguer-icon", (e) => {
 });
 
 $(window).on("scroll", () => {
+	console.log("Scrolled!");
 	if ($(".container-header").offset().top > 0) {
+		console.log("Scrolled below!");
 		$(".container-header").addClass("blurred-container-header");
 	} else {
 		$(".container-header").removeClass("blurred-container-header");
 	}
 });
 
-// Resize the container body height to about tab height
 $(window).on("load", () => {
-	$(".container-body").css("max-height", $("#about-tab").height());
-});
+	// Show page after loaded
+	$("html").css("display", "block");
 
-function listRepos() {
-	let githubData = JSON.parse(localStorage.getItem("github-data"));
-	githubData.forEach((i) => {
-		if (i.long_desc == undefined) {
-			i.long_desc = "Descrição não encontrada!";
-		}
-		$(".repo-container").append(`
-			<div class="wrapper">
-				<div class="card">
-					<input class="more" id="${i.name}" type="checkbox" />
-					<div class="content">
-						<div class="front">
-							<div class="inner">
-								<h2 class="project-name">${i.name}</h2>
-								<p class="project-short-description">${i.description}</p>
-								<label class="button" for="${i.name}" aria-hidden="true">Detalhes</label>
-							</div>
-						</div>
-						<div class="back">
-							<div class="inner">
-								<div class="repo-data">
-									<div class="location">${i.name}</div>
-									<a class="price" href="${i.html_url}">Github</a>
-								</div>
-								<div class="repo-info">
-									<div class="info">
-										<span>${i.stargazers_count}</span>
-										<div class="icon"><i class="fas fa-star"></i>
-											<span>stars</span>
-										</div>
-									</div>
-								</div>
-								<div class="description">
-									<p>${i.long_desc}</p>
-								</div>
-								<label class="button return" for="${i.name}" aria-hidden="true">
-									<i class="fas fa-arrow-left"></i>
-								</label>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		`);
+	// Enable background particles
+	//particlesJS.load("particles", "dist/particles.json");
+
+	// Enable flickity on the page tabs
+	let slidingTabs = $("#container-body").flickity({
+		cellAlign: "left",
+		contain: true,
+		setGallerySize: false,
+		prevNextButtons: false,
+		pageDots: false,
+		dragThreshold: 15
 	});
-}
 
-let actualTime = new Date().getTime();
-let githubDataTimestamp = parseInt(localStorage.getItem("github-data-timestamp"));
-// Verify if 10 minutes have passed since the last API call
-if (actualTime < githubDataTimestamp + 300000) {
-	let minutesSinceLastAPICall = Math.floor(((actualTime - githubDataTimestamp) / 1000) / 60);
-	let secondsSinceLastAPICall = Math.floor(((actualTime - githubDataTimestamp) / 1000) - minutesSinceLastAPICall * 60);
-	$(".api-call-countdown").innerHTML = `${minutesSinceLastAPICall} minute(s) and ${secondsSinceLastAPICall} second(s) since the last API call`;
-	listRepos();
-} else {
-	// Fetch all repos from my account
-	fetch("https://api.github.com/users/henriquehbr/repos")
-		.then(response => response.json())
-		.then((repoData) => {
-			repoData.forEach((i) => {
-				// Fetch the readme from the actual repo
-				fetch(`https://raw.githubusercontent.com/henriquehbr/${i.name}/master/README.md`)
-					.then(response => response.text())
-					.then((descData) => {
-						let longDescRegex = /\[\/\/\]\:\ \<\>\ \((.*?)\)/gm;
-						let longDesc = longDescRegex.exec(descData);
-						if (longDesc !== null) {
-							let repoIndex = repoData.indexOf(i);
-							repoData[repoIndex].long_desc = longDesc[1];
-							localStorage.setItem("github-data", JSON.stringify(repoData));
-							localStorage.setItem("github-data-timestamp", actualTime);
-							listRepos();
-						}
-					});
-			});
-		});
-}
+	$(document).on("click", "[data-tab]", (e) => {
+		if ($(e.target).parents("#sliding-tabs-container").length > 0) {
+			var sliderMargin = $(e.target).offset().left - $(e.target).parent().offset().left;
+			var sliderWidth = $(e.target).width();
+			$("#tabs-slider .slider").css("margin-left", sliderMargin);
+			$("#tabs-slider .slider").width(sliderWidth);
+			slidingTabs.flickity("select", $(e.target).index());
+		} else if ($(e.target).parents("#expandable-menu").length > 0) {
+			$(".expandable-menu-element").removeClass("active-menu-element");
+			$(e.target).addClass("active-menu-element");
+			slidingTabs.flickity("select", $(e.target).index());
+			closeExpandableMenu();
+		}
+	});
 
-$(() => {
-	particlesJS.load("particles", "dist/particles.json");
+	slidingTabs.on("change.flickity", function (event, index) {
+		// Hide the scrollbars on start scrolling
+		$(".carousel-cell").css("overflow", "hidden");
+		sliderTabIndex = $("#tabs-container .tab").eq(index);
+		// Change the highlighted tab
+		var sliderMargin = $(sliderTabIndex).offset().left - $(sliderTabIndex).parent().offset().left;
+		var sliderWidth = $(sliderTabIndex).width();
+		$("#tabs-slider .slider").css("margin-left", sliderMargin);
+		$("#tabs-slider .slider").width(sliderWidth);
+		slidingTabs.flickity("select", $(sliderTabIndex).index());
+
+		// Change the highlighted expandable menu element
+		$("#expandable-menu .expandable-menu-element").removeClass("active-menu-element");
+		$("#expandable-menu .expandable-menu-element").eq(index).addClass("active-menu-element");
+		slidingTabs.flickity("select", $(sliderTabIndex).index());
+		if ($("#expandable-menu:visible").length == 1) {
+			closeExpandableMenu();
+		}
+	});
+
+	slidingTabs.on("settle.flickity", function () {
+		// Re-enable the scroll bars on finish scrolling
+		$(".carousel-cell").css("overflow", "auto");
+	});
 });

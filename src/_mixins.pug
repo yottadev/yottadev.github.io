@@ -1,0 +1,21 @@
+mixin flipable-card(title, short_description, long_description, logo)
+	.wrapper
+		.card
+			input.more(id=`${title}`, type="checkbox")
+			.content
+				.front
+					.inner
+						if logo
+							img.project-logo(src=`${logo}`)
+						else
+							h2.project-name= title
+						p.project-short-description= short_description
+						label.button(for=`${title}`, aria-hidden="true") Detalhes
+				.back
+					.inner
+						.repo-data
+							.location= title
+						.description
+							p= long_description
+						label.button.return(for=`${title}`, aria-hidden="true")
+							i.fas.fa-arrow-left

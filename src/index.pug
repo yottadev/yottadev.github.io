@@ -1,34 +1,26 @@
+include _mixins.pug
 <!DOCTYPE html>
-html(lang="en")
+html(lang="pt-br")
 	head
 		meta(charset="UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		meta(http-equiv="X-UA-Compatible", content="ie=edge")
-		meta(name="description", content="Time de programadores apaixonados por código, prontos para produzir o que sua empresa precisa ou a sua primeira ideia revolucionária")
-		meta(name="keywords", content="yotta, yotta desenvolvimento, dev, development, desenvolvimento, software, startup")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		meta(http-equiv="X-UA-Compatible" content="ie=edge")
+		meta(name="description" content="Time de programadores apaixonados por código, prontos para produzir o que sua empresa precisa ou a sua primeira ideia revolucionária")
+		meta(name="keywords" content="yotta, yotta desenvolvimento, dev, development, desenvolvimento, software, startup")
 		title Yotta
-		// Prevent FOUC (flash of unstyled content)
-		style.
-			.fouc-hidden {
-				display: none
-			}
 		script.
-			var html = document.querySelector("html");
-			html.classList.add("fouc-hidden");
-			window.onload = function () {
-				html.classList.remove("fouc-hidden");
-				html.classList.add("fadeIn");
-			}
-		link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
-		link(rel="stylesheet", href="dist/css/index.css")
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Open+Sans")
-		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css")
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Oswald")
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Baloo+Bhai")
+			document.querySelector("html").style.display = "none";
+		link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
+		link(rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css")
+		link(rel="stylesheet" href="dist/css/index.css")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans")
+		link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald")
+		link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+Bhai")
 	body
 		#particles
 		.container-header
-			img#yotta-logo(src="dist/img/yotta-logo.svg", alt="yotta-logo")
+			img#yotta-logo(src="dist/img/yotta-logo.svg" alt="yotta-logo")
 
 			#sliding-tabs-container
 				#tabs-container
@@ -39,7 +31,7 @@ html(lang="en")
 					.slider
 
 			.social-icons
-				a(href="https://www.instagram.com/yotta.team/", title="Instagram")
+				a(href="https://www.instagram.com/yotta.team/" title="Instagram")
 					i.fab.fa-instagram.fa-2x
 				a(href="https://github.com/yottadev/" title="Github")
 					i.fab.fa-github.fa-2x
@@ -56,27 +48,32 @@ html(lang="en")
 				.expandable-menu-element(data-tab="blog") Blog
 				.expandable-menu-element(data-tab="portfolio") Portfólio
 			.expandable-menu-social-icons
-				a(href="https://www.instagram.com/yotta.team/", title="Instagram")
+				a(href="https://www.instagram.com/yotta.team" title="Instagram")
 					i.fab.fa-instagram.fa-3x
-				a(href="https://github.com/yottadev/" title="Github")
+				a(href="https://github.com/yottadev" title="Github")
 					i.fab.fa-github.fa-3x
 
-		.container-body
-			#about-tab.tab-content
+		#container-body
+			#about-tab.carousel-cell
 				.neon-text-container
 					p.neon-text-paragraph Produzindo sua
 					p.neon-text-paragraph primeira ideia
 					p.neon-text-paragraph revolucionária
-
-			#blog-tab.tab-content
+			#blog-tab.carousel-cell
 				.blog-placeholder-container
-					img.typewriter-icon(src="dist/img/typewriter.png", alt="typewriter-icon")
+					img.typewriter-icon(src="dist/img/typewriter.png" alt="typewriter-icon")
 					h3.blog-placeholder-headline Nenhuma publicação aqui
 					h4.blog-placeholder-subtitle Por enquanto...
-
-			#portfolio-tab.tab-content
+			#portfolio-tab.carousel-cell
 				.repo-container
+					+flipable-card(
+						"HelpMyTime",
+						"Aplicação web para agendamento de serviços",
+						"O HelpMyTime é um serviço que tem como objetivo unir o cliente ao seu consumidor tornando o seu estabelecimento mais visível e accesível, com uma interface simples e intuitiva, sendo cliente ou dono de um negócio, é possível agendar horários, escolher entre diversos serviços, comparar preços e muito mais!",
+						"../dist/img/helpMyTime-logo.svg"
+					)
 
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+		script(src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js")
 		script(src="dist/js/index.js")

@@ -12,7 +12,7 @@ gulp.task("pug-index-to-html", function () {
 
 // Compile .pug files (Pug templates) from "src" to "dist"
 gulp.task("pug-to-html", function () {
-	return gulp.src(["src/*.pug", "!src/index.pug"])
+	return gulp.src(["src/[^_]*.pug", "!src/index.pug"])
 		.pipe(pug())
 		.pipe(gulp.dest("dist"))
 });

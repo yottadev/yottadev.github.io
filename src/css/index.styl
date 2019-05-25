@@ -17,18 +17,19 @@ accent-color = #355cc9
 	box-sizing border-box
 
 html, body
+	height 100%
 	overflow-x hidden
 
 body
 	display flex
 	flex-direction column
-	height 100%
 	margin 0
 	text-align center
 	background-image linear-gradient(to bottom right, #0D142E, #653E8B)
 	color white
-	background-size 400% 400%
-	animation animatedGradient 16s ease infinite
+	font-family "Open Sans"
+	//background-size 400% 400%
+	//animation animatedGradient 16s ease infinite
 
 	::-webkit-scrollbar
 		width 5px
@@ -102,7 +103,7 @@ body
 					background-size 400% auto
 					width calc(33% - 33px)
 					height 100%
-					animation animatedSliderGradient 5s infinite
+					//animation animatedSliderGradient 5s infinite
 					border-radius 28px
 					transition margin 0.5s, width 0.5s
 
@@ -111,84 +112,73 @@ body
 			animation pulseLogo 3s infinite
 			user-select none
 	
-	.container-body
-		display flex
-		width 300%
+	#container-body
+		height calc(100% - 98.66px)
 		margin-top 98.66px
-		align-items flex-start
-		overflow hidden
-		transition transform 0.5s
+		//overflow hidden
 
-		.tab-content
-			flex-grow 1
+		.carousel-cell
+			display flex
+			flex-direction column
+			align-items center
+			color white
 			width 100%
-			min-height calc(100vh - 184.66px)
+			height 100%
+			padding 8px
+			overflow-y auto
+			touch-action pan-y
 
-			&#about-tab, &#blog-tab
+			&#about-tab
 				display flex
 				flex-direction column
 				justify-content center
 				align-items center
 
-				&#blog-tab
-					.blog-placeholder-container
-						font-family "Open Sans"
+			.neon-text-container
+				text-transform uppercase
+				text-shadow 0 0 50px purple
+				user-select none
+				margin-top -98.66px
+				z-index -1
 
-						.typewriter-icon
-							width 256px
-							filter invert(100%) drop-shadow(1px 1px 30px black)
-							margin-bottom 12px
-							user-select none
+				.neon-text-paragraph
+					margin 8px 0
+					transform translate3d(0, 0, 0)
+					&:nth-child(1)
+						font-family "Baloo Bhai"
+						font-size 36px
+						line-height 36px
 
-						.blog-placeholder-headline, .blog-placeholder-subtitle
-							margin 3px
+					&:nth-child(2)
+						font-family "Hemondalisa"
+						font-size 48px
+						line-height 48px
 
-				.neon-text-container
-					text-transform uppercase
-					text-shadow 0 0 50px purple
+					&:nth-child(3)
+						font-family "SunsetBoulevard"
+						font-size 56px
+						line-height 56px
+
+			&#blog-tab
+				display flex
+				flex-direction column
+				justify-content center
+				align-items center
+
+				.typewriter-icon
+					width 256px
+					filter invert(100%) drop-shadow(1px 1px 30px black)
+					margin-bottom 12px
 					user-select none
-					z-index -1
 
-					.neon-text-paragraph
-						margin 8px 0
-						transform translate3d(0, 0, 0)
-						&:nth-child(1)
-							font-family "Baloo Bhai"
-							font-size 36px
-							line-height 36px
-
-						&:nth-child(2)
-							font-family "Hemondalisa"
-							font-size 48px
-							line-height 48px
-
-						&:nth-child(3)
-							font-family "SunsetBoulevard"
-							font-size 56px
-							line-height 56px
+				.blog-placeholder-headline, .blog-placeholder-subtitle
+					margin 3px
 
 			&#portfolio-tab
 				.repo-container
 					display flex
 					flex-wrap wrap
 					justify-content center
-
-// Keyframes
-@keyframes neonEffect
-	0%
-		box-shadow 1px 1px 4px white
-
-	25%
-		box-shadow 1px 1px 6px white
-	
-	50%
-		box-shadow 1px 1px 8px white
-
-	75%
-		box-shadow 1px 1px 6px white
-
-	100%
-		box-shadow 1px 1px 4px white
 
 @keyframes socialIconHover
 	0%
