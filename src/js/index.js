@@ -40,6 +40,56 @@ function closeExpandableMenu() {
 	}
 }
 
+function displayBlogPosts() {
+	var mediumXMLFeed = $.parseXML(sessionStorage.getItem("mediumXMLFeed"));
+	$(mediumXMLFeed).find("item").each(function () {
+		var title = $(this).find("title").text();
+		var date = Date.parse($(this).find("pubDate").text());
+		date = new Date(date);
+		var monthName = date.toLocaleDateString("pt-br", { month: "long" });
+		var postDate = `${date.getDate()} de ${monthName} de ${date.getFullYear()} às ${date.getHours()}:${date.getMinutes()}`;
+		var link = $(this).find("link").text();
+		var author = $(this).find("dc\\:creator").eq(0).text();
+		var content = $($(this).find("content\\:encoded").text()).html();
+		var categories = [];
+		$(this).find("category").each(function () {
+			categories.push(`<span class="category-chip">${$(this).text()}</span>`);
+		});
+		categories = categories.join(" ");
+		$("#blog-tab").append(`
+			<div class="blog-card">
+				<div class="card-header">
+					<h2 class="post-title">${title}</h2>
+				</div>
+				<div class="card-body">
+					<p class="post-publish-date">Publicado no dia ${postDate}<br>por ${author}</p>
+					<div class="post-content">${content}</div>
+				</div>
+				<div class="card-footer">
+					<a href="${link}" target="_blank" class="post-expand-btn">
+						<span class="expand-btn-text">Continuar lendo</span>
+						<i class="fas fa-external-link-alt"></i>
+					</a>
+					<div class="post-categories">${categories}</div>
+				</div>
+			</div>
+		`);
+	});
+}
+
+var XMLparser = new DOMParser();
+if (sessionStorage.getItem("mediumXMLFeed")) {
+	var mediumXMLFeed = sessionStorage.getItem("mediumXMLFeed");
+	displayBlogPosts();
+} else {
+	fetch("https://cors-anywhere.herokuapp.com/https://medium.com/feed/@henriqueborgeshbr")
+		.then(response => response.text())
+		.then((response) => {
+			sessionStorage.setItem("mediumXMLFeed", response);
+			displayBlogPosts();
+		});
+}
+
 // Trigger expandable menu
 $(document).on("click", ".hamburguer-icon", (e) => {
 	if ($(e.target).closest(".hamburguer-icon").hasClass("opened")) {
@@ -49,10 +99,9 @@ $(document).on("click", ".hamburguer-icon", (e) => {
 	}
 });
 
-$(window).on("scroll", () => {
-	console.log("Scrolled!");
-	if ($(".container-header").offset().top > 0) {
-		console.log("Scrolled below!");
+// Blur the fixed header on scroll down
+$(".carousel-cell").on("scroll", function (e) {
+	if ($(e.target).scrollTop() > 0) {
 		$(".container-header").addClass("blurred-container-header");
 	} else {
 		$(".container-header").removeClass("blurred-container-header");
@@ -66,8 +115,12 @@ $(window).on("load", () => {
 	// Enable background particles
 	//particlesJS.load("particles", "dist/particles.json");
 
+	// Set both width and display properties on the "Read more" button avoid animation and sizing issues
+	$(".post-expand-btn").width($(".post-expand-btn").width());
+	$(".post-expand-btn").css("display", "flex");
+
 	// Enable flickity on the page tabs
-	let slidingTabs = $("#container-body").flickity({
+	var slidingTabs = $("#container-body").flickity({
 		cellAlign: "left",
 		contain: true,
 		setGallerySize: false,
@@ -75,6 +128,8 @@ $(window).on("load", () => {
 		pageDots: false,
 		dragThreshold: 15
 	});
+
+	var actualTab = 0;
 
 	$(document).on("click", "[data-tab]", (e) => {
 		if ($(e.target).parents("#sliding-tabs-container").length > 0) {
@@ -90,8 +145,9 @@ $(window).on("load", () => {
 			closeExpandableMenu();
 		}
 	});
-
+	
 	slidingTabs.on("change.flickity", function (event, index) {
+		$("#container-body .carousel-cell").eq(actualTab).animate({scrollTop: 0}, "slow");
 		// Hide the scrollbars on start scrolling
 		$(".carousel-cell").css("overflow", "hidden");
 		sliderTabIndex = $("#tabs-container .tab").eq(index);
@@ -109,6 +165,7 @@ $(window).on("load", () => {
 		if ($("#expandable-menu:visible").length == 1) {
 			closeExpandableMenu();
 		}
+		actualTab = index
 	});
 
 	slidingTabs.on("settle.flickity", function () {

@@ -1,4 +1,4 @@
-include _mixins.pug
+include _mixins
 <!DOCTYPE html>
 html(lang="pt-br")
 	head
@@ -60,10 +60,6 @@ html(lang="pt-br")
 					p.neon-text-paragraph primeira ideia
 					p.neon-text-paragraph revolucionária
 			#blog-tab.carousel-cell
-				.blog-placeholder-container
-					img.typewriter-icon(src="dist/img/typewriter.png" alt="typewriter-icon")
-					h3.blog-placeholder-headline Nenhuma publicação aqui
-					h4.blog-placeholder-subtitle Por enquanto...
 			#portfolio-tab.carousel-cell
 				.repo-container
 					+flipable-card(
